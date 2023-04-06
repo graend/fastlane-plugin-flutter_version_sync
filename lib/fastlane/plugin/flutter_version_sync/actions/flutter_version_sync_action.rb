@@ -44,6 +44,11 @@ module Fastlane
           new_gradle = new_gradle_w_version_name.gsub(/versionCode\s[0-9]*/, "versionCode #{new_build_number}")
           File.open(path, "w") {|file| file.puts new_gradle } 
         end
+
+        {
+          'version_info' => new_version,
+          'build_number' => new_build_number
+        }
       end
 
       def self.description
@@ -55,11 +60,13 @@ module Fastlane
       end
 
       def self.return_value
-        # If your method provides a return value, you can describe here what it does
+        [
+          ['VERSION_INFO', 'The version info x.y.x to which pubspec and gradle was updated to'],
+          ['BUILD_NUMBER', 'The build number info X to which pubspec and gradle was updated to']
+        ]
       end
 
       def self.details
-        # Optional:
         "The pubspec.yml is the master nad it will be incremented and synced to grandle and Info.plist"
       end
 
